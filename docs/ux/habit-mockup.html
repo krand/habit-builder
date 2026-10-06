@@ -1,0 +1,373 @@
+<div id="habit-mockup" class="viz-dotted-background" aria-label="Charcoal habit tracker mockup">
+  <div class="hb-preview-stage"><div class="hb-phone" data-start="today" aria-label="Habit tracker design"></div></div>
+</div>
+<style>
+#habit-mockup .hb-preview-stage {padding:16px 0;}
+#habit-mockup .hb-phone {--hb-bg:light-dark(#f6f6f7,#1c1d20);--hb-surface:light-dark(#ffffff,#292b30);--hb-ink:light-dark(#25262a,#f0f1f3);--hb-muted:light-dark(#60646c,#bfc3cb);--hb-line:light-dark(#dfe1e5,#454951);--hb-soft:light-dark(#e9eaed,#3a3e46);--hb-accent:light-dark(#3c414b,#d0d5de);--hb-on-accent:light-dark(#ffffff,#252930);font-family:Roboto,Arial,sans-serif;font-size:14px;line-height:1.45;color:var(--hb-ink);background:var(--hb-bg);max-width:380px;min-height:625px;margin:auto;border:1px solid var(--hb-line);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-sizing:border-box;}
+#habit-mockup .hb-phone * {box-sizing:border-box;}
+#habit-mockup .hb-status {display:flex;justify-content:space-between;padding:15px 24px 4px;font-size:12px;font-weight:500;}
+#habit-mockup .hb-header {padding:20px 20px 12px;}
+#habit-mockup .hb-eyebrow {color:var(--hb-muted);font-size:12px;margin:0 0 4px;}
+#habit-mockup .hb-title {font-size:28px;line-height:1.2;font-weight:500;margin:0;letter-spacing:-.5px;}
+#habit-mockup .hb-content {padding:0 20px 20px;flex:1;}
+#habit-mockup .hb-date {color:var(--hb-muted);margin:10px 0 18px;}
+#habit-mockup .hb-summary {padding:16px;border-radius:18px;background:var(--hb-soft);margin-bottom:20px;}
+#habit-mockup .hb-summary p {margin:0;}
+#habit-mockup .hb-summary strong {font-weight:500;}
+#habit-mockup .hb-track {height:6px;background:var(--hb-line);border-radius:4px;margin:12px 0 0;overflow:hidden;}
+#habit-mockup .hb-fill {height:100%;background:var(--hb-accent);}
+#habit-mockup .hb-group {font-size:12px;color:var(--hb-muted);margin:18px 0 8px;}
+#habit-mockup .hb-row {background:var(--hb-surface);border-radius:18px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;}
+#habit-mockup .hb-text {flex:1;min-width:0;}
+#habit-mockup .hb-text strong {display:block;font-weight:500;}
+#habit-mockup .hb-meta {color:var(--hb-muted);font-size:12px;margin-top:3px;}
+#habit-mockup .hb-phone button {font:inherit;color:inherit;border:0;}
+#habit-mockup .hb-check {height:48px;width:48px;flex:0 0 48px;border-radius:16px;background:var(--hb-soft);font-size:21px;}
+#habit-mockup .hb-check[aria-pressed="true"] {background:var(--hb-accent);color:var(--hb-on-accent);}
+#habit-mockup .hb-link {padding:0;min-height:48px;background:transparent;text-align:left;color:var(--hb-accent);font-weight:500;}
+#habit-mockup .hb-edit {min-width:48px;min-height:48px;border-radius:14px;background:var(--hb-soft);}
+#habit-mockup .hb-note {font-size:12px;min-height:36px;color:var(--hb-muted);margin:12px 0 0;}
+#habit-mockup .hb-nav {display:flex;gap:4px;justify-content:space-around;background:var(--hb-surface);padding:8px 12px 12px;border-top:1px solid var(--hb-line);}
+#habit-mockup .hb-nav button {background:transparent;flex:1;min-height:58px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;border-radius:18px;color:var(--hb-muted);font-size:12px;}
+#habit-mockup .hb-nav button[aria-current="page"] {background:var(--hb-soft);color:var(--hb-ink);}
+#habit-mockup .hb-nav svg {width:18px;height:18px;}
+#habit-mockup .hb-week {display:block;width:100%;text-align:left;background:var(--hb-surface);padding:14px;border-radius:18px;margin-bottom:12px;min-height:110px;}
+#habit-mockup .hb-week-heading {display:flex;gap:8px;justify-content:space-between;margin-bottom:12px;}
+#habit-mockup .hb-week-heading strong {font-weight:500;}
+#habit-mockup .hb-grid {display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center;}
+#habit-mockup .hb-day {font-size:12px;color:var(--hb-muted);padding:0 0 8px;}
+#habit-mockup .hb-mark {border-radius:10px;min-height:32px;display:flex;align-items:center;justify-content:center;background:var(--hb-soft);font-weight:500;}
+#habit-mockup .hb-mark.done {background:var(--hb-accent);color:var(--hb-on-accent);}
+#habit-mockup .hb-mark.future {background:var(--hb-bg);color:var(--hb-muted);}
+#habit-mockup .hb-legend {display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--hb-muted);margin:12px 0;}
+#habit-mockup .hb-feature {padding:20px;border-radius:20px;background:var(--hb-surface);}
+#habit-mockup .hb-feature h3 {font-size:20px;font-weight:500;margin:0 0 4px;}
+#habit-mockup .hb-big {font-size:32px;font-weight:500;letter-spacing:-1px;margin:14px 0 0;}
+#habit-mockup .hb-primary {background:var(--hb-accent);color:var(--hb-on-accent);min-height:48px;border-radius:24px;padding:10px 18px;width:100%;margin-top:18px;font-weight:500;}
+#habit-mockup .hb-overlay {position:absolute;inset:0;background:light-dark(#222a2066,#00000080);z-index:2;display:flex;align-items:center;padding:16px;}
+#habit-mockup .hb-overlay[hidden] {display:none;}
+#habit-mockup .hb-sheet {width:100%;background:var(--hb-surface);padding:20px;border-radius:24px;}
+#habit-mockup .hb-sheet-top {display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;}
+#habit-mockup .hb-sheet h3 {font-size:20px;font-weight:500;margin:0;}
+#habit-mockup .hb-date-pick {display:flex;gap:8px;margin:10px 0 20px;}
+#habit-mockup .hb-date-pick button {flex:1;min-height:48px;border-radius:14px;background:var(--hb-soft);}
+#habit-mockup .hb-date-pick button[aria-pressed="true"] {background:var(--hb-accent);color:var(--hb-on-accent);}
+#habit-mockup .hb-options {display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+#habit-mockup .hb-options button {min-height:48px;border-radius:14px;background:var(--hb-soft);}
+#habit-mockup .hb-options button[aria-pressed="true"] {background:var(--hb-accent);color:var(--hb-on-accent);}
+#habit-mockup .hb-phone[data-density="compact"] .hb-row {padding:10px;margin-bottom:8px;}
+#habit-mockup .hb-typed-row {display:block;}
+#habit-mockup .hb-row-top {display:flex;justify-content:space-between;gap:8px;align-items:flex-start;}
+#habit-mockup .hb-control-row {display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;}
+#habit-mockup .hb-choice {min-height:48px;padding:8px 16px;border-radius:14px;background:var(--hb-soft);}
+#habit-mockup .hb-choice[aria-pressed="true"] {background:var(--hb-accent);color:var(--hb-on-accent);}
+#habit-mockup .hb-number {min-width:32px;text-align:center;font-size:20px;font-variant-numeric:tabular-nums;}
+#habit-mockup .hb-sheet label {display:block;margin-bottom:14px;}
+#habit-mockup .hb-sheet input,#habit-mockup .hb-sheet select {display:block;width:100%;min-height:48px;margin-top:6px;padding:10px;border:1px solid var(--hb-line);background:var(--hb-bg);color:var(--hb-ink);border-radius:12px;font:inherit;font-size:16px;}
+#habit-mockup .hb-period {display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 12px;}
+#habit-mockup .hb-period strong {font-weight:500;text-align:center;}
+#habit-mockup .hb-selection-bar {display:flex;align-items:center;gap:12px;justify-content:space-between;margin:0 0 16px;}
+#habit-mockup .hb-week-dates {font-size:12px;color:var(--hb-muted);margin:12px 0 8px;}
+#habit-mockup .hb-week-row {margin:0 0 14px;background:var(--hb-surface);padding:14px 12px;border-radius:18px;}
+#habit-mockup .hb-week-row .hb-week-heading {margin-bottom:6px;}
+#habit-mockup .hb-grid {gap:4px;}
+#habit-mockup .hb-cell {position:relative;min-height:48px;padding:4px 1px;background:var(--hb-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;min-width:0;}
+#habit-mockup .hb-cell-mark {font-size:13px;font-weight:500;overflow-wrap:anywhere;}
+#habit-mockup .hb-cell-date {font-size:11px;color:var(--hb-muted);align-self:flex-start;padding-left:4px;}
+#habit-mockup .hb-cell.hb-selected {outline:2px solid var(--hb-ink);outline-offset:1px;}
+#habit-mockup .hb-cell.hb-future .hb-cell-mark {opacity:.55;}
+#habit-mockup .hb-comment-dot {position:absolute;right:4px;bottom:1px;font-size:15px;}
+#habit-mockup .hb-month-grid .hb-cell {min-height:62px;}
+#habit-mockup .hb-detail {background:var(--hb-surface);padding:14px;border-radius:18px;margin:16px 0 0;}
+#habit-mockup .hb-detail-head {display:flex;justify-content:space-between;align-items:flex-start;gap:8px;font-size:12px;}
+#habit-mockup .hb-detail-head strong {font-size:14px;font-weight:500;}
+#habit-mockup .hb-field-title {font-size:12px;color:var(--hb-muted);margin:16px 0 6px;}
+#habit-mockup .hb-palette {display:flex;gap:5px;flex-wrap:wrap;}
+#habit-mockup .hb-color {display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:6px 10px;background:var(--hb-bg);border-radius:12px;font-size:12px;}
+#habit-mockup .hb-color[aria-pressed="true"] {outline:2px solid var(--hb-accent);outline-offset:-2px;}
+#habit-mockup .hb-swatch {display:block;width:16px;height:16px;border:1px solid var(--hb-line);border-radius:50%;flex:0 0 16px;}
+#habit-mockup .hb-tint-none {--hb-tint:var(--hb-surface);background:var(--hb-tint);}
+#habit-mockup .hb-tint-mint {--hb-tint:light-dark(#e4f1de,#304a2a);background:var(--hb-tint);}
+#habit-mockup .hb-tint-amber {--hb-tint:light-dark(#fff0c9,#54441e);background:var(--hb-tint);}
+#habit-mockup .hb-tint-rose {--hb-tint:light-dark(#fbe1e3,#532f37);background:var(--hb-tint);}
+#habit-mockup .hb-tint-blue {--hb-tint:light-dark(#e0edff,#2e405c);background:var(--hb-tint);}
+#habit-mockup .hb-comment-label {display:block;font-size:12px;color:var(--hb-muted);margin:16px 0 0;}
+#habit-mockup .hb-comment-label textarea {display:block;width:100%;resize:vertical;border:1px solid var(--hb-line);background:var(--hb-bg);color:var(--hb-ink);border-radius:12px;padding:10px;margin-top:6px;font:inherit;font-size:16px;min-height:74px;}
+#habit-mockup .hb-detail-footer {display:flex;align-items:center;gap:10px;margin-top:10px;}
+#habit-mockup .hb-note-link {display:block;width:100%;text-align:left;min-height:44px;background:transparent;margin-top:4px;font-size:12px;color:var(--hb-ink);overflow-wrap:anywhere;}
+#habit-mockup .hb-row .hb-edit svg {width:18px;height:18px;}
+#habit-mockup .hb-sheet .hb-detail {padding:0;}
+#habit-mockup .hb-day-actions {display:flex;gap:2px;flex-shrink:0;margin:-4px -4px 0 0;}
+#habit-mockup .hb-icon-action {position:relative;display:flex;align-items:center;justify-content:center;width:44px;min-width:44px;height:44px;padding:4px;background:transparent;border-radius:14px;font-size:18px;}
+#habit-mockup .hb-icon-action::before {content:"";position:absolute;inset:4px;background:var(--hb-soft);border-radius:10px;}
+#habit-mockup .hb-icon-action span {position:relative;}
+#habit-mockup .hb-comment-preview {font-size:12px;margin:10px 0 0;overflow-wrap:anywhere;white-space:pre-wrap;}
+#habit-mockup .hb-week-config {margin-top:14px;padding-top:12px;border-top:1px solid var(--hb-line);}
+#habit-mockup .hb-week-hint {font-size:12px;color:var(--hb-muted);margin:12px 0 0;}
+#habit-mockup .hb-cell.hb-tint-none {background:var(--hb-soft);}
+#habit-mockup .hb-bulk-actions {display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0;}
+#habit-mockup .hb-dialog-actions {display:flex;align-items:center;gap:10px;margin-top:18px;}
+#habit-mockup .hb-dialog-actions .hb-primary {margin:0;width:auto;flex:1;}
+#habit-mockup .hb-color-options {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:20px 0;}
+#habit-mockup .hb-color-option {display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;min-height:76px;min-width:0;padding:6px 0;background:transparent;border-radius:12px;font-size:12px;}
+#habit-mockup .hb-color-disc {display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--hb-line);border-radius:50%;font-size:18px;}
+#habit-mockup .hb-color-option[aria-pressed="true"] .hb-color-disc {outline:2px solid var(--hb-ink);outline-offset:3px;}
+#habit-mockup .hb-phone button:disabled {opacity:.45;}
+#habit-mockup .hb-statistics {margin:14px 0 18px;background:var(--hb-surface);padding:14px;border-radius:18px;}
+#habit-mockup .hb-stat-table {width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px;}
+#habit-mockup .hb-stat-table caption {text-align:left;font-weight:500;margin-bottom:10px;}
+#habit-mockup .hb-stat-table th {font-weight:400;text-align:left;overflow-wrap:anywhere;}
+#habit-mockup .hb-stat-table thead th {font-size:12px;color:var(--hb-muted);padding:0 0 8px;}
+#habit-mockup .hb-stat-table thead th span {display:block;}
+#habit-mockup .hb-stat-table th:first-child {width:46%;}
+#habit-mockup .hb-stat-table th:not(:first-child),#habit-mockup .hb-stat-table td {text-align:right;}
+#habit-mockup .hb-stat-table tbody th,#habit-mockup .hb-stat-table td {padding:10px 0;border-top:1px solid var(--hb-line);}
+#habit-mockup .hb-stat-table td {font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;}
+#habit-mockup .hb-stat-rule {font-size:12px;color:var(--hb-muted);margin:6px 0 0;}
+#habit-mockup .hb-stat-edit {display:block;background:transparent;color:var(--hb-accent);min-height:44px;padding:6px 0;text-decoration:underline;text-underline-offset:3px;}
+#habit-mockup .hb-delete-icon {width:48px;height:48px;flex:0 0 48px;border-radius:24px;background:light-dark(#a13232,#c74747);color:#fff;font-size:20px;}
+#habit-mockup .hb-dialog-actions .hb-confirm-danger {background:light-dark(#a13232,#c74747);color:#fff;}
+#habit-mockup .hb-edit-fields {max-height:420px;overflow-y:auto;}
+@media(max-width:380px) {#habit-mockup .hb-header {padding:20px 16px 12px;}#habit-mockup .hb-content {padding:0 12px 20px;}#habit-mockup .hb-grid {gap:3px;}}
+</style>
+<script>
+(() => {
+  const root=document.getElementById('habit-mockup');
+  const TODAY='2026-10-06', CURRENT_WEEK='2026-10-05';
+  const typeNames={checkbox:'Yes / no',counter:'Counter',single:'Single choice',multiple:'Multiple choice'};
+  const colors={none:'None',mint:'Mint',amber:'Amber',rose:'Rose',blue:'Blue'};
+  const clone=v=>JSON.parse(JSON.stringify(v));
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const dateOf=s=>new Date(s+'T12:00:00Z');
+  const iso=d=>d.toISOString().slice(0,10);
+  const shift=(s,n)=>{const d=dateOf(s);d.setUTCDate(d.getUTCDate()+n);return iso(d);};
+  const dateLabel=s=>dateOf(s).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+  const monthLabel=s=>dateOf(s).toLocaleDateString('en-GB',{month:'long',year:'numeric',timeZone:'UTC'});
+  const nextMonth=(s,n)=>{const d=dateOf(s);d.setUTCMonth(d.getUTCMonth()+n,1);return iso(d);};
+  const empty=h=>h.type==='checkbox'?false:h.type==='counter'?0:h.type==='multiple'?[]:null;
+  const shortMark=(h,v)=>h.type==='checkbox'?(v?'✓':'·'):h.type==='counter'?(v||'·'):h.type==='single'?(v||'·'):(v.map(c=>c[0]).join('+')||'·');
+  const key=(i,d)=>i+'@'+d;
+  const defaultHabits=[
+    {name:'Sport',type:'checkbox',goal:'Any activity counts',choices:[],demoIndex:0},
+    {name:'Video / book',type:'counter',goal:'Count completed sessions',choices:[],threshold:1,demoIndex:1},
+    {name:'English / writing',type:'multiple',goal:'Choose everything you did',choices:['English','Writing'],demoIndex:2},
+    {name:'S/F marker',type:'single',goal:'Choose one mark',choices:['S','F'],demoIndex:3}
+  ];
+  const validThreshold=n=>Number.isInteger(n)&&n>=1&&n<=99;
+  const validHabit=h=>h&&typeof h.name==='string'&&h.name.length<=50&&Object.hasOwn(typeNames,h.type)&&Array.isArray(h.choices)&&h.choices.length<=8&&h.choices.every(c=>typeof c==='string'&&c.length<=30)&&(h.type!=='counter'||h.threshold===undefined||validThreshold(h.threshold));
+  const normalizeHabits=list=>clone(list).map(h=>{const demoIndex=h.demoIndex??defaultHabits.findIndex(d=>d.name===h.name);return {...h,...(demoIndex>=0?{demoIndex}:{}),...(h.type==='counter'?{threshold:h.threshold??1}:{})};});
+  const prior=window.openai?.widgetState?.privateContent;
+  let habits=prior?.version===2&&Array.isArray(prior.habits)&&prior.habits.length<=8&&prior.habits.every(validHabit)?normalizeHabits(prior.habits):clone(defaultHabits);
+  let edits={};
+  function validEntry(i,e){const h=habits[i];return h&&e&&Object.hasOwn(colors,e.color)&&typeof e.comment==='string'&&e.comment.length<=200&&(h.type==='checkbox'?typeof e.value==='boolean':h.type==='counter'?Number.isInteger(e.value)&&e.value>=0&&e.value<=99:h.type==='single'?e.value===null||h.choices.includes(e.value):Array.isArray(e.value)&&e.value.every(c=>h.choices.includes(c)));}
+  if(prior?.version===2&&prior.edits)Object.entries(prior.edits).forEach(([k,e])=>{if(/^\d+@2026-\d{2}-\d{2}$/.test(k)&&validEntry(Number(k.split('@')[0]),e))edits[k]=clone(e);});
+  // Illustrative data only; a changed day becomes a shared override.
+  function seed(i,d){
+    const h=habits[i],demo=h.demoIndex,n=Number(d.slice(-2));
+    let value=empty(h),color='none',comment='';
+    if(demo!==undefined&&d>='2026-09-01'&&d<=TODAY){
+      if(h.type==='checkbox')value=n%3===0||d==='2026-10-05';
+      else if(h.type==='counter')value=n%4===0?2:n%3===0?0:1;
+      else if(h.type==='multiple')value=n%5===0?['English','Writing']:n%2===0?['English']:['Writing'];
+      else value=n%3===0?'S':'F';
+      if(demo===0&&value)color='mint';
+      if(demo===0&&d==='2026-10-06'){value=false;color='amber';comment='Rest day. Moving this session to tomorrow.';}
+      if(demo===0&&d==='2026-10-05')comment='30-minute walk after work.';
+      if(demo===0&&d==='2026-09-24'){color='blue';comment='Tried a new route.';}
+      if(demo===1&&d===TODAY)comment='Read a chapter on the commute.';
+      if(demo===2&&d===TODAY)value=[];
+      if(demo===3&&d===TODAY)value=null;
+    }
+    return {value,color,comment};
+  }
+  const entry=(i,d)=>clone(edits[key(i,d)]||seed(i,d));
+  const write=(i,d,patch)=>{if(d>TODAY&&Object.hasOwn(patch,'value'))return;edits[key(i,d)]={...entry(i,d),...patch};};
+  function statistics(i,start,end){
+    const h=habits[i],values=[];
+    for(let date=start;date<=end&&date<=TODAY;date=shift(date,1))values.push(entry(i,date).value);
+    if(h.type==='checkbox')return [{label:'Yes',count:values.filter(v=>v===true).length}];
+    if(h.type==='counter')return [{label:'Threshold met',count:values.filter(v=>v>=h.threshold).length}];
+    return h.choices.map(c=>({label:c,count:values.filter(v=>h.type==='single'?v===c:v.includes(c)).length}));
+  }
+  const phones=[];
+  function persist(){
+    const state={version:2,statisticsVersion:1,mockup:'charcoal',habits,edits,phones:phones.map(p=>({view:p.view,week:p.week,month:p.month,history:p.history,active:p.active,selection:[...p.selection],density:p.design.density}))};
+    if(new TextEncoder().encode(JSON.stringify(state)).length<15300)window.openai?.setWidgetState({modelContent:{habitUx:'Month and calendar-year statistics: Yes days, counter days meeting threshold, counts per choice',selectedTheme:'Charcoal',counterThresholds:habits.filter(h=>h.type==='counter').map(h=>({habit:h.name,threshold:h.threshold})),views:state.phones.map(p=>({view:p.view}))},privateContent:state})?.catch(()=>{});
+  }
+  function refresh(){phones.forEach(p=>p.render());if(globalThis.lucide)lucide.createIcons();}
+  function constrainWeekSelection(p){
+    if(p.view!=='week')return;
+    const selected=[...p.selection].filter(k=>{const [i,date]=k.split('@');return habits[Number(i)]&&date>=p.week&&date<=shift(p.week,6);});
+    const habit=p.active&&selected.includes(key(p.active.i,p.active.date))?String(p.active.i):selected.at(-1)?.split('@')[0];
+    p.selection=new Set(selected.filter(k=>k.split('@')[0]===habit));
+    if(!p.selection.size)p.active=null;
+    else if(!p.active||!p.selection.has(key(p.active.i,p.active.date))){const [i,date]=[...p.selection].at(-1).split('@');p.active={i:Number(i),date};}
+  }
+  root.querySelectorAll('.hb-phone').forEach((el,index)=>{
+    const saved=prior?.version===2&&prior.statisticsVersion===1?prior.phones?.[index]:null;
+    const p={el,view:['today','week','habits','history'].includes(saved?.view)?saved.view:el.dataset.start,week:saved?.week||CURRENT_WEEK,month:saved?.month||'2026-10-01',history:Number.isInteger(saved?.history)&&saved.history<habits.length?saved.history:0,active:saved?.active||{i:0,date:TODAY},selection:new Set(),batchColor:'mint',undo:null,mode:null,modalHabit:null,design:{density:saved?.density==='compact'?'compact':'comfortable'}};
+    p.selection=new Set(Array.isArray(saved?.selection)?saved.selection.filter(k=>typeof k==='string'&&/^\d+@2026-\d{2}-\d{2}$/.test(k)&&habits[Number(k.split('@')[0])]):p.active?[key(p.active.i,p.active.date)]:[]);
+    phones.push(p);
+    el.innerHTML='<div class="hb-status"><span>9:41</span><span>● ▰</span></div><header class="hb-header"><p class="hb-eyebrow">Habit tracker · sample data</p><h2 class="hb-title"></h2></header><main class="hb-content"></main><nav class="hb-nav" aria-label="Main navigation"><button type="button" class="cursor-interaction" data-view="today"><i data-lucide="circle-check" aria-hidden="true"></i>Today</button><button type="button" class="cursor-interaction" data-view="week"><i data-lucide="calendar-days" aria-hidden="true"></i>Week</button><button type="button" class="cursor-interaction" data-view="habits"><i data-lucide="list" aria-hidden="true"></i>Habits</button></nav><div class="hb-overlay" hidden><section class="hb-sheet" role="dialog" aria-modal="true" aria-label="Habit options"></section></div>';
+    p.content=el.querySelector('.hb-content');p.overlay=el.querySelector('.hb-overlay');
+    function controls(i,d){
+      const h=habits[i],v=entry(i,d).value,future=d>TODAY,common=' data-habit="'+i+'" data-date="'+d+'"';
+      if(h.type==='checkbox')return '<button type="button" class="hb-check cursor-interaction" data-toggle'+common+' aria-label="'+esc(h.name)+' done" aria-pressed="'+v+'" '+(future?'disabled':'')+'>'+(v?'✓':'·')+'</button><span class="hb-meta">'+(future?'Future day':v?'Done':'Not marked')+'</span>';
+      if(h.type==='counter')return '<button type="button" class="hb-check cursor-interaction" data-count="-1"'+common+' aria-label="Decrease count" '+(v===0||future?'disabled':'')+'>−</button><output class="hb-number" aria-live="polite">'+v+'</output><button type="button" class="hb-check cursor-interaction" data-count="1"'+common+' aria-label="Increase count" '+(v===99||future?'disabled':'')+'>+</button>';
+      return h.choices.map((c,j)=>'<button type="button" class="hb-choice cursor-interaction" data-choice="'+j+'"'+common+' aria-pressed="'+(h.type==='single'?v===c:v.includes(c))+'" '+(future?'disabled':'')+'>'+esc(c)+'</button>').join('');
+    }
+    function dayActions(i,d,multiple=false){
+      const e=entry(i,d),common=' data-habit="'+i+'" data-date="'+d+'"';
+      return '<div class="hb-day-actions"><button type="button" class="hb-icon-action cursor-interaction" '+(multiple?'data-open-bulk-color':'data-open-color'+common)+' aria-label="'+(multiple?'Color selected days':'Change day color for '+esc(habits[i].name))+'" data-tooltip="Color"><span aria-hidden="true">🖍️</span></button><button type="button" class="hb-icon-action cursor-interaction" data-open-comment'+common+' aria-label="'+(multiple?'Comments require a single selected day':(e.comment?'Edit':'Add')+' comment for '+esc(habits[i].name))+'" '+(multiple?'disabled':'')+' data-tooltip="'+(multiple?'Select one day to comment':e.comment?'Edit comment':'Add comment')+'"><span aria-hidden="true">💬</span></button></div>';
+    }
+    function commentPreview(i,d){const comment=entry(i,d).comment;return comment?'<p class="hb-comment-preview">'+esc(comment)+'</p>':'';}
+    function details(i,d,withinWeek=false){
+      const h=habits[i],multiple=p.selection.size>1;
+      const selectedHabits=new Set([...p.selection].map(k=>k.split('@')[0]));
+      const label=multiple?p.selection.size+(selectedHabits.size===1?' days selected':' cells selected'):dateLabel(d);
+      return '<section class="'+(withinWeek?'hb-week-config':'hb-detail')+'" aria-label="Selected day"><div class="hb-detail-head"><div class="hb-text">'+(withinWeek?'':'<strong>'+esc(h.name)+'</strong>')+'<span aria-live="polite">'+label+'</span></div>'+dayActions(i,d,multiple)+'</div>'+(multiple?'':'<div class="hb-control-row">'+controls(i,d)+'</div>'+commentPreview(i,d))+'</section>';
+    }
+    function cell(i,d,month=false){
+      const h=habits[i],e=entry(i,d),future=d>TODAY,chosen=p.selection.has(key(i,d));
+      return '<button type="button" class="hb-cell cursor-interaction hb-tint-'+e.color+(future?' hb-future':'')+(chosen?' hb-selected':'')+'" data-cell data-habit="'+i+'" data-date="'+d+'" aria-pressed="'+chosen+'" aria-label="'+esc(h.name)+', '+dateLabel(d)+', '+(future?'future':esc(shortMark(h,e.value)))+', '+colors[e.color]+(e.comment?', has comment':'')+'">'+(month?'<span class="hb-cell-date">'+Number(d.slice(-2))+'</span>':'')+'<span class="hb-cell-mark">'+(future?'':esc(shortMark(h,e.value)))+'</span>'+(e.comment?'<span class="hb-comment-dot" aria-hidden="true">•</span>':'')+'</button>';
+    }
+    function historyStatistics(i,start,end){
+      const h=habits[i],year=start.slice(0,4),monthStats=statistics(i,start,end),yearStats=statistics(i,year+'-01-01',year+'-12-31');
+      const monthName=dateOf(start).toLocaleDateString('en-GB',{month:'short',timeZone:'UTC'});
+      return '<section class="hb-statistics" aria-label="Month and year statistics"><table class="hb-stat-table"><caption>Statistics</caption><thead><tr><th scope="col">'+(h.type==='multiple'||h.type==='single'?'Option':'Measure')+'</th><th scope="col">Month<span>'+monthName+'</span></th><th scope="col">Year<span>'+year+'</span></th></tr></thead><tbody>'+monthStats.map((stat,index)=>'<tr><th scope="row">'+esc(stat.label)+'</th><td data-stat-month="'+index+'">'+stat.count+'</td><td data-stat-year="'+index+'">'+yearStats[index].count+'</td></tr>').join('')+'</tbody></table><p class="hb-stat-rule">'+(h.type==='checkbox'?'Each Yes adds 1.':h.type==='counter'?'Daily count ≥ '+h.threshold+' adds 1.':h.type==='multiple'?'Each selected option adds 1 for that day.':'Each chosen option adds 1 for that day.')+(h.type==='counter'?' <button type="button" class="hb-stat-edit cursor-interaction" data-settings="'+i+'">Edit threshold</button>':'')+'</p></section>';
+    }
+    function render(){
+      constrainWeekSelection(p);
+      el.dataset.density=p.design.density;
+      if(p.view==='history'&&!habits[p.history])p.view='habits';
+      el.querySelector('.hb-title').textContent=p.view==='history'?habits[p.history].name:{today:'Today',week:'Your week',habits:'Your habits'}[p.view];
+      el.querySelectorAll('[data-view]').forEach(b=>{if(b.dataset.view===(p.view==='history'?'habits':p.view))b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+      if(p.view==='today'){
+        p.content.innerHTML='<p class="hb-date">Tuesday, 6 October</p>'+habits.map((h,i)=>{const e=entry(i,TODAY);return '<div class="hb-row hb-typed-row hb-tint-'+e.color+'"><div class="hb-row-top"><div class="hb-text"><strong>'+esc(h.name)+'</strong><div class="hb-meta">'+typeNames[h.type]+'</div></div>'+dayActions(i,TODAY)+'</div><div class="hb-control-row">'+controls(i,TODAY)+'</div>'+commentPreview(i,TODAY)+'</div>';}).join('');
+      }else if(p.view==='week'){
+        const days=Array.from({length:7},(_,n)=>shift(p.week,n));
+        const activeVisible=p.active&&days.includes(p.active.date)&&p.active.i<habits.length&&p.selection.has(key(p.active.i,p.active.date));
+        p.content.innerHTML='<div class="hb-period"><button type="button" class="hb-edit cursor-interaction" data-week="-1" aria-label="Previous week">‹</button><strong>'+dateLabel(days[0]).replace(/^\w+,? /,'')+' – '+dateLabel(days[6]).replace(/^\w+,? /,'')+'</strong><button type="button" class="hb-edit cursor-interaction" data-week="1" aria-label="Next week" '+(p.week>=CURRENT_WEEK?'disabled':'')+'>›</button></div>'+habits.map((h,i)=>'<section class="hb-week-row"><div class="hb-week-heading"><strong>'+esc(h.name)+'</strong><span class="hb-meta">'+typeNames[h.type]+'</span></div><div class="hb-grid hb-week-dates">'+days.map((d,n)=>'<span>'+['M','T','W','T','F','S','S'][n]+'<br>'+Number(d.slice(-2))+'</span>').join('')+'</div><div class="hb-grid">'+days.map(d=>cell(i,d)).join('')+'</div>'+(activeVisible&&p.active.i===i?details(i,p.active.date,true):'<p class="hb-week-hint">'+(days.filter(d=>p.selection.has(key(i,d))).length?days.filter(d=>p.selection.has(key(i,d))).length+' selected in this week':'Tap days to select; tap again to deselect')+'</p>')+'</section>').join('')+'<div class="hb-legend"><span>• Has comment</span><span>· No mark</span><span>Outline = selected</span></div>'+(p.undo&&p.selection.size===1?'<button type="button" class="hb-link cursor-interaction" data-undo>Undo color change</button>':'');
+      }else if(p.view==='habits'){
+        p.content.innerHTML='<p class="hb-date">Your habits and their history</p>'+(habits.length?habits.map((h,i)=>'<div class="hb-row"><div class="hb-text"><strong>'+esc(h.name)+'</strong><div class="hb-meta">'+typeNames[h.type]+'</div></div><button class="hb-choice cursor-interaction" type="button" data-history="'+i+'">History</button><button class="hb-edit cursor-interaction" type="button" data-settings="'+i+'" aria-label="Edit '+esc(h.name)+'">···</button></div>').join(''):'<p class="hb-date">No habits yet.</p>')+'<button type="button" class="hb-primary cursor-interaction" data-add '+(habits.length>=8?'disabled':'')+'>+ Add habit</button>';
+      }else{
+        const start=p.month,d=dateOf(start),year=d.getUTCFullYear(),month=d.getUTCMonth();
+        const count=new Date(Date.UTC(year,month+1,0)).getUTCDate(),offset=(d.getUTCDay()+6)%7;
+        const dates=Array.from({length:count},(_,n)=>shift(start,n));
+        const active=p.active?.i===p.history&&p.active.date.startsWith(start.slice(0,7))&&p.selection.has(key(p.active.i,p.active.date));
+        const h=habits[p.history];
+        p.content.innerHTML='<button type="button" class="hb-link cursor-interaction" data-view="habits">‹ All habits</button><div class="hb-period"><button type="button" class="hb-edit cursor-interaction" data-month="-1" aria-label="Previous month">‹</button><strong>'+monthLabel(start)+'</strong><button type="button" class="hb-edit cursor-interaction" data-month="1" aria-label="Next month" '+(start>='2026-10-01'?'disabled':'')+'>›</button></div><p class="hb-meta">'+typeNames[h.type]+'</p>'+historyStatistics(p.history,start,dates.at(-1))+'<div class="hb-grid hb-week-dates">'+['M','T','W','T','F','S','S'].map(d=>'<span>'+d+'</span>').join('')+'</div><div class="hb-grid hb-month-grid">'+Array.from({length:offset},()=>'<span></span>').join('')+dates.map(d=>cell(p.history,d,true)).join('')+'</div><div class="hb-legend"><span>• Has comment</span><span>Tap a date to view or edit</span></div>'+(active?details(p.history,p.active.date):'');
+      }
+    }
+    function open(mode,i,date=TODAY){p.mode=mode;p.modalHabit=i;p.modalDate=date;p.draftHabit=null;p.overlay.hidden=false;el.querySelector('main').inert=true;el.querySelector('nav').inert=true;sheet();p.overlay.querySelector('button').focus();}
+    function sheet(){
+      const h=p.modalHabit===null?null:habits[p.modalHabit],draft=p.draftHabit||h,body=el.querySelector('.hb-sheet');
+      const close='<button type="button" class="hb-edit cursor-interaction" data-close aria-label="Close">×</button>';
+      if(p.mode==='color'||p.mode==='bulk-color'){
+        const bulk=p.mode==='bulk-color';
+        const current=bulk?p.batchColor:entry(p.modalHabit,p.modalDate).color;
+        p.dialogColor=current;
+        body.innerHTML='<div class="hb-sheet-top"><h3>Day color</h3>'+close+'</div><p class="hb-meta">'+(bulk?p.selection.size+' selected cells':esc(h.name)+' · '+dateLabel(p.modalDate))+'</p><div class="hb-color-options" role="group" aria-label="Predefined colors">'+Object.entries(colors).map(([c,label])=>'<button type="button" class="hb-color-option cursor-interaction" data-pick-color="'+c+'" aria-pressed="'+(current===c)+'" aria-label="'+label+'"><span class="hb-color-disc hb-tint-'+c+'" aria-hidden="true">'+(current===c?'✓':c==='none'?'×':'')+'</span><span>'+label+'</span></button>').join('')+'</div><div class="hb-dialog-actions"><button type="button" class="hb-choice cursor-interaction" data-close>Cancel</button><button type="button" class="hb-primary cursor-interaction" data-confirm-color>Apply color</button></div>';
+      }
+      else if(p.mode==='comment'){
+        body.innerHTML='<div class="hb-sheet-top"><h3>Edit comment</h3>'+close+'</div><p class="hb-meta">'+esc(h.name)+' · '+dateLabel(p.modalDate)+'</p><label class="hb-comment-label">Comment<textarea data-dialog-comment maxlength="200" rows="4" placeholder="Add a note about this day…">'+esc(entry(p.modalHabit,p.modalDate).comment)+'</textarea></label><div class="hb-dialog-actions"><button type="button" class="hb-choice cursor-interaction" data-close>Cancel</button><button type="button" class="hb-primary cursor-interaction" data-confirm-comment>Save comment</button></div>';
+      }
+      else if(p.mode==='settings')body.innerHTML='<div class="hb-sheet-top"><h3>Edit habit</h3>'+close+'</div><div class="hb-edit-fields"><label>Name<input name="habit-name" value="'+esc(draft.name)+'" maxlength="50" required></label><label>Mark type<select name="habit-type">'+Object.entries(typeNames).map(([v,label])=>'<option value="'+v+'" '+(draft.type===v?'selected':'')+'>'+label+'</option>').join('')+'</select></label><label data-choice-field '+(['single','multiple'].includes(draft.type)?'':'hidden')+'>Choices, separated by commas<input name="habit-choices" value="'+esc(draft.choices.join(', '))+'" maxlength="250"></label><label data-threshold-field '+(draft.type==='counter'?'':'hidden')+'>Daily threshold<input name="habit-threshold" type="number" min="1" max="99" step="1" value="'+(draft.threshold||1)+'" inputmode="numeric"><span class="hb-meta">Changing this recalculates month and year statistics.</span></label></div><p class="hb-meta" data-error role="alert"></p><div class="hb-dialog-actions"><button type="button" class="hb-choice cursor-interaction" data-close>Cancel</button><button type="button" class="hb-primary cursor-interaction" data-save-habit>Save habit</button><button type="button" class="hb-delete-icon cursor-interaction" data-delete-habit aria-label="Delete habit" title="Delete habit">🗑️</button></div>';
+      else if(p.mode==='confirm-delete')body.innerHTML='<div class="hb-sheet-top"><h3>Delete habit?</h3>'+close+'</div><p>'+esc(h.name)+' and all its marks, colors, and comments will be permanently removed.</p><div class="hb-dialog-actions"><button type="button" class="hb-choice cursor-interaction" data-back-edit>Keep habit</button><button type="button" class="hb-primary hb-confirm-danger cursor-interaction" data-confirm-delete>Delete habit</button></div>';
+      else if(p.mode==='confirm-edit')body.innerHTML='<div class="hb-sheet-top"><h3>Change habit setup?</h3>'+close+'</div><p>Changing the mark type or removing choices will clear affected past marks. Colors and comments will stay.</p><div class="hb-dialog-actions"><button type="button" class="hb-choice cursor-interaction" data-back-edit>Cancel</button><button type="button" class="hb-primary cursor-interaction" data-confirm-edit>Save changes</button></div>';
+      else body.innerHTML='<div class="hb-sheet-top"><h3>New habit</h3>'+close+'</div><label>Name<input name="habit-name" placeholder="e.g. Drink water" maxlength="50" required></label><label>Mark type<select name="habit-type">'+Object.entries(typeNames).map(([v,label])=>'<option value="'+v+'">'+label+'</option>').join('')+'</select></label><label data-choice-field hidden>Choices, separated by commas<input name="habit-choices" placeholder="e.g. Reading, Video" maxlength="100"></label><label data-threshold-field hidden>Daily threshold<input name="habit-threshold" type="number" min="1" max="99" step="1" value="1" inputmode="numeric" required><span class="hb-meta">Count ≥ threshold adds 1 per day to statistics.</span></label><p class="hb-meta" data-error role="alert"></p><button type="button" class="hb-primary cursor-interaction" data-create>Create habit</button>';
+    }
+    function close(){p.overlay.hidden=true;p.mode=null;el.querySelector('main').inert=false;el.querySelector('nav').inert=false;refresh();persist();p.returnFocus&&el.querySelector(p.returnFocus)?.focus();}
+    function redraw(selector){refresh();if(selector)el.querySelector(selector)?.focus();}
+    function saveEditedHabit(updated){
+      const i=p.modalHabit,previous=habits[i],clearMarks=previous.type!==updated.type||previous.choices.some(c=>!updated.choices.includes(c));
+      if(clearMarks){
+        const affected=new Map(Object.entries(edits).filter(([k])=>k.startsWith(i+'@')));
+        if(previous.demoIndex!==undefined)for(let d='2026-09-01';d<=TODAY;d=shift(d,1))affected.set(key(i,d),entry(i,d));
+        habits[i]=updated;
+        for(const [k,e] of affected){
+          const value=previous.type!==updated.type?empty(updated):updated.type==='single'?(updated.choices.includes(e.value)?e.value:null):updated.type==='multiple'?e.value.filter(c=>updated.choices.includes(c)):e.value;
+          edits[k]={...e,value};
+        }
+      }else habits[i]=updated;
+      p.draftHabit=null;close();
+    }
+    function deleteHabit(){
+      const deleted=p.modalHabit;
+      habits.splice(deleted,1);
+      edits=Object.fromEntries(Object.entries(edits).flatMap(([k,e])=>{const [i,d]=k.split('@'),old=Number(i);return old===deleted?[]:[[key(old>deleted?old-1:old,d),e]];}));
+      phones.forEach(q=>{
+        if(q.history===deleted&&q.view==='history')q.view='habits';
+        if(q.history>deleted)q.history--;
+        if(q.active){if(q.active.i===deleted)q.active=null;else if(q.active.i>deleted)q.active.i--;}
+        q.selection=new Set([...q.selection].flatMap(k=>{const [i,d]=k.split('@'),old=Number(i);return old===deleted?[]:[key(old>deleted?old-1:old,d)];}));
+      });
+      p.returnFocus=null;close();
+    }
+    el.addEventListener('change',e=>{if(e.target.name==='habit-type'){el.querySelector('[data-choice-field]').hidden=!['single','multiple'].includes(e.target.value);el.querySelector('[data-threshold-field]').hidden=e.target.value!=='counter';}});
+    el.addEventListener('click',e=>{
+      const b=e.target.closest('button');if(!b||b.disabled)return;
+      const i=Number(b.dataset.habit),d=b.dataset.date;
+      const focusSelector=()=>{const a=['data-toggle','data-count','data-choice'].find(n=>b.hasAttribute(n));return a?'['+a+'="'+b.getAttribute(a)+'"][data-habit="'+i+'"][data-date="'+d+'"]':null;};
+      if(b.dataset.view){if(p.mode)close();p.view=b.dataset.view;p.selection.clear();if(p.view==='week'){if(!p.active||p.active.date<p.week||p.active.date>shift(p.week,6))p.active={i:0,date:p.week===CURRENT_WEEK?TODAY:p.week};p.selection.add(key(p.active.i,p.active.date));}redraw();persist();return;}
+      if(b.hasAttribute('data-open-color')||b.hasAttribute('data-open-comment')){const attr=b.hasAttribute('data-open-color')?'data-open-color':'data-open-comment';p.returnFocus='['+attr+'][data-habit="'+i+'"][data-date="'+d+'"]';open(attr==='data-open-color'?'color':'comment',i,d);return;}
+      if(b.hasAttribute('data-open-bulk-color')){p.returnFocus='[data-open-bulk-color]';open('bulk-color',null);return;}
+      if(b.hasAttribute('data-pick-color')){p.dialogColor=b.dataset.pickColor;el.querySelectorAll('[data-pick-color]').forEach(button=>{const c=button.dataset.pickColor;button.setAttribute('aria-pressed',String(c===p.dialogColor));button.querySelector('.hb-color-disc').textContent=c===p.dialogColor?'✓':c==='none'?'×':'';});return;}
+      if(b.hasAttribute('data-confirm-color')){const color=p.dialogColor;if(p.mode==='bulk-color'){p.batchColor=color;p.undo=[...p.selection].map(k=>{const [i,date]=k.split('@');return {i:Number(i),date,color:entry(Number(i),date).color};});p.undo.forEach(v=>write(v.i,v.date,{color}));}else write(p.modalHabit,p.modalDate,{color});close();return;}
+      if(b.hasAttribute('data-confirm-comment')){write(p.modalHabit,p.modalDate,{comment:el.querySelector('[data-dialog-comment]').value});close();return;}
+      if(b.hasAttribute('data-save-habit')){
+        const name=el.querySelector('[name="habit-name"]').value.trim(),type=el.querySelector('[name="habit-type"]').value;
+        const choices=[...new Set(el.querySelector('[name="habit-choices"]').value.split(',').map(v=>v.trim()).filter(Boolean))];
+        const threshold=Number(el.querySelector('[name="habit-threshold"]').value);
+        if(!name||(['single','multiple'].includes(type)&&(choices.length<2||choices.length>8||choices.some(c=>c.length>30)))){el.querySelector('[data-error]').textContent=!name?'Give the habit a name.':'Add 2–8 choices, each up to 30 characters.';return;}
+        if(type==='counter'&&!validThreshold(threshold)){el.querySelector('[data-error]').textContent='Enter a whole number from 1 to 99.';return;}
+        const previous=habits[p.modalHabit],updated={...previous,name,type,choices:['single','multiple'].includes(type)?choices:[],threshold:type==='counter'?threshold:1};
+        if(previous.type!==type||previous.choices.some(c=>!updated.choices.includes(c))){p.draftHabit=updated;p.mode='confirm-edit';sheet();}else saveEditedHabit(updated);
+        return;
+      }
+      if(b.hasAttribute('data-confirm-edit')){saveEditedHabit(p.draftHabit);return;}
+      if(b.hasAttribute('data-delete-habit')){p.mode='confirm-delete';sheet();return;}
+      if(b.hasAttribute('data-confirm-delete')){deleteHabit();return;}
+      if(b.hasAttribute('data-back-edit')){p.mode='settings';sheet();return;}
+      if(b.hasAttribute('data-settings')){open('settings',Number(b.dataset.settings));return;}
+      if(b.hasAttribute('data-add')){open('add',null);return;}
+      if(b.hasAttribute('data-close')){close();return;}
+      if(b.hasAttribute('data-history')){if(p.mode)close();p.history=Number(b.dataset.history);p.month='2026-10-01';p.active={i:p.history,date:TODAY};p.selection=new Set([key(p.history,TODAY)]);p.view='history';redraw();persist();return;}
+      if(b.hasAttribute('data-week')){p.week=shift(p.week,Number(b.dataset.week)*7);p.active={i:0,date:p.week===CURRENT_WEEK?TODAY:p.week};p.selection=new Set([key(p.active.i,p.active.date)]);redraw();persist();return;}
+      if(b.hasAttribute('data-month')){p.month=nextMonth(p.month,Number(b.dataset.month));p.active={i:p.history,date:p.month==='2026-10-01'?TODAY:p.month};p.selection=new Set([key(p.active.i,p.active.date)]);redraw();persist();return;}
+      if(b.hasAttribute('data-cell')){const k=key(i,d);if(p.view==='week'&&[...p.selection].some(selected=>Number(selected.split('@')[0])!==i))p.selection.clear();if(p.selection.has(k)){p.selection.delete(k);if(p.selection.size){const [lastI,lastDate]=[...p.selection].at(-1).split('@');p.active={i:Number(lastI),date:lastDate};}else p.active=null;}else{p.selection.add(k);p.active={i,date:d};}redraw('[data-cell][data-habit="'+i+'"][data-date="'+d+'"]');persist();return;}
+      if(b.hasAttribute('data-undo')){p.undo?.forEach(v=>write(v.i,v.date,{color:v.color}));p.undo=null;redraw();persist();return;}
+      if(b.hasAttribute('data-create')){
+        const name=el.querySelector('[name="habit-name"]').value.trim(),type=el.querySelector('[name="habit-type"]').value;
+        const choices=[...new Set(el.querySelector('[name="habit-choices"]').value.split(',').map(v=>v.trim()).filter(Boolean))];
+        const threshold=Number(el.querySelector('[name="habit-threshold"]').value);
+        if(!name||(['single','multiple'].includes(type)&&(choices.length<2||choices.length>8||choices.some(c=>c.length>30)))){el.querySelector('[data-error]').textContent=!name?'Give the habit a name.':'Add 2–8 choices, each up to 30 characters.';return;}
+        if(type==='counter'&&!validThreshold(threshold)){el.querySelector('[data-error]').textContent='Enter a whole number from 1 to 99.';return;}
+        habits.push({name,type,goal:type==='counter'?'Count occurrences':type==='checkbox'?'Mark when it happens':type==='single'?'Choose one mark':'Choose everything that applies',choices:['single','multiple'].includes(type)?choices:[],...(type==='counter'?{threshold}: {})});close();return;
+      }
+      if(!habits[i]||!d)return;
+      const h=habits[i],v=entry(i,d).value;
+      if(b.hasAttribute('data-toggle'))write(i,d,{value:!v});
+      else if(b.hasAttribute('data-count'))write(i,d,{value:Math.min(99,Math.max(0,v+Number(b.dataset.count)))});
+      else if(b.hasAttribute('data-choice')){const c=h.choices[Number(b.dataset.choice)];write(i,d,{value:h.type==='single'?(v===c?null:c):(v.includes(c)?v.filter(v=>v!==c):[...v,c])});}
+      else return;
+      redraw(focusSelector());persist();
+    });
+    el.addEventListener('keydown',e=>{
+      if(p.overlay.hidden)return;
+      if(e.key==='Escape'){e.preventDefault();close();}
+      if(e.key==='Tab'){const controls=[...p.overlay.querySelectorAll('button:not(:disabled),input,select,textarea')].filter(c=>!c.closest('[hidden]'));const first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+    });
+    p.render=render;render();
+    if(globalThis.Tweak){const t=new Tweak({container:el,onChange:()=>{render();persist();}});t.addSelect(p.design,'density',{label:'List spacing',options:['comfortable','compact']});}
+  });
+  window.addEventListener('openai:set_globals',event=>{
+    const state=event.detail?.globals?.widgetState?.privateContent;if(state?.version!==2)return;
+    if(Array.isArray(state.habits)&&state.habits.length<=8&&state.habits.every(validHabit))habits=normalizeHabits(state.habits);
+    if(state.edits){edits={};Object.entries(state.edits).forEach(([k,e])=>{if(/^\d+@2026-\d{2}-\d{2}$/.test(k)&&validEntry(Number(k.split('@')[0]),e))edits[k]=clone(e);});}
+    phones.forEach((p,index)=>{const s=state.phones?.[index];if(!s)return;if(['today','week','habits','history'].includes(s.view))p.view=s.view;if(s.week)p.week=s.week;if(s.month)p.month=s.month;if(Object.hasOwn(s,'active'))p.active=s.active;if(Array.isArray(s.selection))p.selection=new Set(s.selection.filter(k=>typeof k==='string'&&/^\d+@2026-\d{2}-\d{2}$/.test(k)&&habits[Number(k.split('@')[0])]));if(Number.isInteger(s.history)&&s.history<habits.length)p.history=s.history;p.design.density=s.density==='compact'?'compact':'comfortable';});refresh();
+  });
+  refresh();
+})();
+
+</script>
