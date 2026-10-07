@@ -4,10 +4,7 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Marked day concept: tile, check, and annotation dot within the adaptive icon safe zone. -->
-    <path
-        android:fillColor="#F6F6F7"
-        android:pathData="M36,22 H72 C79.73,22 86,28.27 86,36 V72 C86,79.73 79.73,86 72,86 H36 C28.27,86 22,79.73 22,72 V36 C22,28.27 28.27,22 36,22 Z" />
+    <!-- Marked day concept: check and annotation dot within the adaptive icon safe zone. -->
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#3C414B"

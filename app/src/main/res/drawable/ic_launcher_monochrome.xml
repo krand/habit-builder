@@ -7,11 +7,6 @@
     <path
         android:fillColor="@android:color/transparent"
         android:strokeColor="#FFFFFFFF"
-        android:strokeWidth="4"
-        android:pathData="M36,23 H72 C79.18,23 85,28.82 85,36 V72 C85,79.18 79.18,85 72,85 H36 C28.82,85 23,79.18 23,72 V36 C23,28.82 28.82,23 36,23 Z" />
-    <path
-        android:fillColor="@android:color/transparent"
-        android:strokeColor="#FFFFFFFF"
         android:strokeWidth="8"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"

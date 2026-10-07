@@ -513,9 +513,7 @@ private fun WeekScreen(
                         selectedDates = selected?.dates.orEmpty(),
                         onSelect = { onSelect(habit, it) },
                     )
-                    if (selected == null) {
-                        Text("Tap a day to configure it", Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    } else {
+                    if (selected != null) {
                         HorizontalDivider(Modifier.padding(top = 14.dp, bottom = 10.dp), color = MaterialTheme.colorScheme.outline)
                         val activeDate = selected.activeDate
                         val entry = data.entry(habit.id, activeDate)
@@ -548,6 +546,9 @@ private fun WeekScreen(
                     }
                 }
             }
+        }
+        if (habits.isNotEmpty()) {
+            Text("Tap a day to configure it", Modifier.padding(bottom = 4.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Text("• Has comment     · No mark     Outline = selected", Modifier.padding(bottom = 16.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
