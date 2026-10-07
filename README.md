@@ -10,6 +10,18 @@ On the **Habits** tab, **Export to Excel** opens Android's file save dialog and 
 
 UX requirements and unresolved product decisions are collected in [`docs/ux/habit-ux-spec.md`](docs/ux/habit-ux-spec.md). The single Charcoal reference mockup is [`docs/ux/habit-mockup.html`](docs/ux/habit-mockup.html).
 
+## Screenshots
+
+Captured from the Android app with sample habits and entries. Tap a screenshot to view it at full size.
+
+| Today | Week |
+| :---: | :---: |
+| [<img src="docs/screenshots/today.png" alt="Today screen showing all four habit types, a day color, and a comment" width="300">](docs/screenshots/today.png) | [<img src="docs/screenshots/week.png" alt="Week screen showing daily marks, colors, and comment indicators" width="300">](docs/screenshots/week.png) |
+
+| Habits | Monthly history |
+| :---: | :---: |
+| [<img src="docs/screenshots/habits.png" alt="Habits screen with history, settings, Add habit, and Export to Excel controls" width="300">](docs/screenshots/habits.png) | [<img src="docs/screenshots/history.png" alt="Monthly history for Read a book, with month and year statistics and a calendar of daily marks" width="300">](docs/screenshots/history.png) |
+
 ## Build and install on a phone
 
 Open this project in Android Studio, wait for Gradle sync, choose an emulator or USB-connected phone, and press **Run**. Set the project's Gradle JDK to Java 21. The app's minimum supported Android version is Android 7.0 (API 24).
