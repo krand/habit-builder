@@ -4,6 +4,8 @@ A native Android habit tracker built with Kotlin and Jetpack Compose. It has Tod
 
 The first implementation supports yes/no, counter, single-choice, and multiple-choice marks; per-habit day colors and comments; selecting one or more dates within a single habit in Week; and month/year statistics. Counter habits have an editable daily threshold. Habit definitions, marks, colors, comments, and thresholds are saved locally on the device. A fresh installation starts with no habits.
 
+On **Today**, **Week**, or **Habits**, hold a habit panel and drag it up or down to reorder it. Holding near the top or bottom scrolls longer lists. The order is shared across the three tabs and saved when you release the panel. Accessibility actions also let you move a panel up or down.
+
 On the **Habits** tab, **Export to Excel** opens Android's file save dialog and creates an `.xlsx` workbook. **Week view** lays out the saved weeks with Monday–Sunday cells; colored cells keep their color and a dot indicates a comment. **Daily entries** contains every saved habit/date entry with the full mark, color, and comment, including future dates. **Habits** lists the current habit settings and counter thresholds. The export saves a copy and does not change app data.
 
 UX requirements and unresolved product decisions are collected in [`docs/ux/habit-ux-spec.md`](docs/ux/habit-ux-spec.md). The single Charcoal reference mockup is [`docs/ux/habit-mockup.html`](docs/ux/habit-mockup.html).

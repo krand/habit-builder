@@ -82,6 +82,13 @@ data class TrackerData(
         entries = entries.filterKeys { !it.startsWith("$habitId|") },
     )
 
+    fun withHabitOrder(habitIds: List<String>): TrackerData {
+        if (habitIds == habits.map { it.id }) return this
+        val byId = habits.associateBy { it.id }
+        if (habitIds.size != habits.size || habitIds.toSet() != byId.keys) return this
+        return copy(habits = habitIds.map { byId.getValue(it) })
+    }
+
     companion object {
         fun entryKey(habitId: String, date: LocalDate): String = "$habitId|$date"
 

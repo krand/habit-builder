@@ -185,6 +185,7 @@ fun HabitBuilderApp() {
                     onMark = { habit, mark -> updateEntry(habit.id, today) { it.copy(mark = mark) } },
                     onColor = { habit -> colorTarget = ColorTarget(habit.id, listOf(today)) },
                     onComment = { habit -> commentTarget = habit.id to today },
+                    onReorder = { setData(data.withHabitOrder(it)) },
                 )
 
                 currentTab == AppTab.WEEK -> WeekScreen(
@@ -210,6 +211,7 @@ fun HabitBuilderApp() {
                     onMark = { habit, date, mark -> updateEntry(habit.id, date) { it.copy(mark = mark) } },
                     onColor = { habit, dates -> colorTarget = ColorTarget(habit.id, dates) },
                     onComment = { habit, date -> commentTarget = habit.id to date },
+                    onReorder = { setData(data.withHabitOrder(it)) },
                 )
 
                 else -> HabitsScreen(
@@ -222,6 +224,7 @@ fun HabitBuilderApp() {
                     onSettings = { settingsHabitId = it.id },
                     onAdd = { showAddHabit = true },
                     onExport = { exportLauncher.launch("HabitBuilder-${LocalDate.now()}.xlsx") },
+                    onReorder = { setData(data.withHabitOrder(it)) },
                 )
             }
         }
@@ -293,26 +296,26 @@ private fun TodayScreen(
     onMark: (Habit, MarkValue) -> Unit,
     onColor: (Habit) -> Unit,
     onComment: (Habit) -> Unit,
+    onReorder: (List<String>) -> Unit,
 ) {
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).imePadding().padding(horizontal = 20.dp),
-    ) {
-        ScreenHeader("Today", today.format(fullDateFormatter()))
-        Spacer(Modifier.height(6.dp))
-        if (habits.isEmpty()) EmptyHabitsMessage()
-        habits.forEach { habit ->
-            val entry = data.entry(habit.id, today)
-            HabitDayCard(
-                habit = habit,
-                entry = entry,
-                date = today,
-                onMark = { onMark(habit, it) },
-                onColor = { onColor(habit) },
-                onComment = { onComment(habit) },
-            )
-            Spacer(Modifier.height(12.dp))
-        }
-        Spacer(Modifier.height(8.dp))
+    ReorderableHabitList(
+        habits = habits,
+        onReorder = onReorder,
+        modifier = Modifier.imePadding(),
+        header = {
+            ScreenHeader("Today", today.format(fullDateFormatter()))
+            if (habits.isEmpty()) EmptyHabitsMessage()
+        },
+    ) { habit ->
+        val entry = data.entry(habit.id, today)
+        HabitDayCard(
+            habit = habit,
+            entry = entry,
+            date = today,
+            onMark = { onMark(habit, it) },
+            onColor = { onColor(habit) },
+            onComment = { onComment(habit) },
+        )
     }
 }
 
@@ -323,38 +326,43 @@ private fun HabitsScreen(
     onSettings: (Habit) -> Unit,
     onAdd: () -> Unit,
     onExport: () -> Unit,
+    onReorder: (List<String>) -> Unit,
 ) {
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
-    ) {
-        ScreenHeader("Your habits", "Habits and their history")
-        if (habits.isEmpty()) EmptyHabitsMessage()
-        habits.forEach { habit ->
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                shape = RoundedCornerShape(18.dp),
+    ReorderableHabitList(
+        habits = habits,
+        onReorder = onReorder,
+        header = {
+            ScreenHeader("Your habits", "Habits and their history")
+            if (habits.isEmpty()) EmptyHabitsMessage()
+        },
+        footer = {
+            Column {
+                Button(onClick = onAdd, modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) { Text("+ Add habit") }
+                OutlinedButton(onClick = onExport, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text("Export to Excel") }
+            }
+        },
+    ) { habit ->
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            shape = RoundedCornerShape(18.dp),
+        ) {
+            Row(
+                Modifier.fillMaxWidth().padding(start = 14.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                Row(
-                    Modifier.fillMaxWidth().padding(start = 14.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    Column(Modifier.weight(1f)) {
-                        Text(habit.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                        Text(habit.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    OutlinedButton(onClick = { onHistory(habit) }) { Text("History") }
-                    IconButton(
-                        onClick = { onSettings(habit) },
-                        modifier = Modifier.semantics { contentDescription = "Edit ${habit.name}" },
-                    ) { Text("···", fontSize = 19.sp) }
+                Column(Modifier.weight(1f)) {
+                    Text(habit.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                    Text(habit.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
+                OutlinedButton(onClick = { onHistory(habit) }) { Text("History") }
+                IconButton(
+                    onClick = { onSettings(habit) },
+                    modifier = Modifier.semantics { contentDescription = "Edit ${habit.name}" },
+                ) { Text("···", fontSize = 19.sp) }
             }
         }
-        Button(onClick = onAdd, modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) { Text("+ Add habit") }
-        OutlinedButton(onClick = onExport, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) { Text("Export to Excel") }
-        Spacer(Modifier.height(18.dp))
     }
 }
 
@@ -479,78 +487,83 @@ private fun WeekScreen(
     onMark: (Habit, LocalDate, MarkValue) -> Unit,
     onColor: (Habit, List<LocalDate>) -> Unit,
     onComment: (Habit, LocalDate) -> Unit,
+    onReorder: (List<String>) -> Unit,
 ) {
     val weekDates = (0..6).map { weekStart.plusDays(it.toLong()) }
-    Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
-    ) {
-        ScreenHeader("Your week", "Review and annotate each day")
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-            IconButton(onClick = { onWeek(weekStart.minusWeeks(1)) }, modifier = Modifier.size(48.dp).semantics { contentDescription = "Previous week" }) { Text("‹", fontSize = 28.sp) }
-            Text("${weekStart.format(shortDateFormatter())} – ${weekDates.last().format(shortDateFormatter())}", style = MaterialTheme.typography.titleMedium)
-            IconButton(onClick = { onWeek(weekStart.plusWeeks(1)) }, modifier = Modifier.size(48.dp).semantics { contentDescription = "Next week" }) { Text("›", fontSize = 28.sp) }
-        }
-        Spacer(Modifier.height(8.dp))
-        if (habits.isEmpty()) EmptyHabitsMessage()
-        habits.forEach { habit ->
-            val selected = selection?.takeIf { it.habitId == habit.id }
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            ) {
-                Column(Modifier.fillMaxWidth().padding(14.dp)) {
-                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text(habit.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                        Text(habit.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    Spacer(Modifier.height(12.dp))
-                    WeekCells(
-                        dates = weekDates,
-                        habit = habit,
-                        data = data,
-                        today = today,
-                        selectedDates = selected?.dates.orEmpty(),
-                        onSelect = { onSelect(habit, it) },
-                    )
-                    if (selected != null) {
-                        HorizontalDivider(Modifier.padding(top = 14.dp, bottom = 10.dp), color = MaterialTheme.colorScheme.outline)
-                        val activeDate = selected.activeDate
-                        val entry = data.entry(habit.id, activeDate)
-                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                            Column(Modifier.weight(1f)) {
-                                Text(if (selected.dates.size == 1) activeDate.format(fullDateFormatter()) else "${selected.dates.size} days selected", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium)
-                                if (selected.dates.size == 1) Text(habit.name, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                            DayActionButton("🖍️", "Change color for ${selected.dates.size} selected day(s)") { onColor(habit, selected.dates.sorted()) }
-                            DayActionButton(
-                                "💬",
-                                if (selected.dates.size == 1) "Edit comment for ${habit.name}" else "Select one day to edit a comment",
-                                enabled = selected.dates.size == 1,
-                            ) {
-                                if (selected.dates.size == 1) onComment(habit, activeDate)
-                            }
+    ReorderableHabitList(
+        habits = habits,
+        onReorder = onReorder,
+        header = {
+            ScreenHeader("Your week", "Review and annotate each day")
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                IconButton(onClick = { onWeek(weekStart.minusWeeks(1)) }, modifier = Modifier.size(48.dp).semantics { contentDescription = "Previous week" }) { Text("‹", fontSize = 28.sp) }
+                Text("${weekStart.format(shortDateFormatter())} – ${weekDates.last().format(shortDateFormatter())}", style = MaterialTheme.typography.titleMedium)
+                IconButton(onClick = { onWeek(weekStart.plusWeeks(1)) }, modifier = Modifier.size(48.dp).semantics { contentDescription = "Next week" }) { Text("›", fontSize = 28.sp) }
+            }
+            if (habits.isEmpty()) EmptyHabitsMessage()
+        },
+        footer = {
+            Column {
+                if (habits.isNotEmpty()) {
+                    Text("Tap a day to configure it", Modifier.padding(bottom = 4.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text("• Has comment     · No mark     Outline = selected", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+    ) { habit ->
+        val selected = selection?.takeIf { it.habitId == habit.id }
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        ) {
+            Column(Modifier.fillMaxWidth().padding(14.dp)) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(habit.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                    Text(habit.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Spacer(Modifier.height(12.dp))
+                WeekCells(
+                    dates = weekDates,
+                    habit = habit,
+                    data = data,
+                    today = today,
+                    selectedDates = selected?.dates.orEmpty(),
+                    onSelect = { onSelect(habit, it) },
+                )
+                if (selected != null) {
+                    HorizontalDivider(Modifier.padding(top = 14.dp, bottom = 10.dp), color = MaterialTheme.colorScheme.outline)
+                    val activeDate = selected.activeDate
+                    val entry = data.entry(habit.id, activeDate)
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Column(Modifier.weight(1f)) {
+                            Text(if (selected.dates.size == 1) activeDate.format(fullDateFormatter()) else "${selected.dates.size} days selected", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium)
+                            if (selected.dates.size == 1) Text(habit.name, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        if (selected.dates.size == 1) {
+                        DayActionButton("🖍️", "Change color for ${selected.dates.size} selected day(s)") { onColor(habit, selected.dates.sorted()) }
+                        DayActionButton(
+                            "💬",
+                            if (selected.dates.size == 1) "Edit comment for ${habit.name}" else "Select one day to edit a comment",
+                            enabled = selected.dates.size == 1,
+                        ) {
+                            if (selected.dates.size == 1) onComment(habit, activeDate)
+                        }
+                    }
+                    if (selected.dates.size == 1) {
+                        Spacer(Modifier.height(6.dp))
+                        MarkControls(habit, entry.mark, enabled = !activeDate.isAfter(today)) { onMark(habit, activeDate, it) }
+                        if (habit.type == MarkType.COUNTER) {
+                            Spacer(Modifier.height(3.dp))
+                            Text("Daily threshold: ${habit.threshold}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        if (entry.comment.isNotBlank()) {
                             Spacer(Modifier.height(6.dp))
-                            MarkControls(habit, entry.mark, enabled = !activeDate.isAfter(today)) { onMark(habit, activeDate, it) }
-                            if (habit.type == MarkType.COUNTER) {
-                                Spacer(Modifier.height(3.dp))
-                                Text("Daily threshold: ${habit.threshold}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                            if (entry.comment.isNotBlank()) {
-                                Spacer(Modifier.height(6.dp))
-                                Text(entry.comment, style = MaterialTheme.typography.bodyMedium)
-                            }
+                            Text(entry.comment, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                 }
             }
         }
-        if (habits.isNotEmpty()) {
-            Text("Tap a day to configure it", Modifier.padding(bottom = 4.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        Text("• Has comment     · No mark     Outline = selected", Modifier.padding(bottom = 16.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

@@ -1,7 +1,7 @@
 # Habit Builder — UX requirements
 
 Status: collected requirements and current UX decisions.  
-Updated: 6 October 2026.  
+Updated: 7 October 2026.
 Reference: [Charcoal interactive mockup](habit-mockup.html).
 
 ## 1. Purpose and scope
@@ -40,6 +40,8 @@ Each habit and calendar date has one shared daily entry. Its fields are:
 The day color belongs to a **specific habit and date**, rather than to the date across all habits. Changing Sport's Tuesday color must not change Video / book's Tuesday color.
 
 Today and Week must display the same underlying entries. The current design also uses those entries in History. Saved changes must be reflected wherever the entry is displayed.
+
+Today, Week, and Habits share one habit order. Long-press a habit panel and drag it up or down to reorder it. The dragged panel is lifted visually, surrounding panels move to show its new position, and holding near a viewport edge scrolls the list. Releasing saves the order locally across tabs and app restarts; cancelling a drag discards the preview. Panel accessibility actions offer Move up and Move down. Ordinary scrolling and taps on mark, annotation, history, settings, and week-day controls retain their behavior.
 
 Color and comment edits are independent of the mark. Annotating an unmarked day does not mark the habit as done or contribute to statistics.
 
@@ -218,12 +220,13 @@ These describe the reference implementation and are not confirmed production con
 17. **Delete habit:** Tap ⋯, choose Delete habit, and confirm. The habit and all its dated data disappear; deleting the last habit remains effective after restarting the app.
 18. **Empty first run:** A fresh installation shows no predefined habits and offers the Add habit action.
 19. **Excel export:** Save an `.xlsx` file from Habits. Verify the current habits, their thresholds and choices, saved marks, day colors, and complete comments are present; colored future dates are included. Canceling Android's save dialog creates no export.
+20. **Habit order:** Drag a panel on Today, Week, or Habits. The same order appears on the other two tabs and after restarting. Reorder a selected Week panel and keep its selected dates and entries. Verify edge scrolling on a long list, cancellation without saving, and accessible movement in both directions.
 
 ## 13. Decisions still open
 
 - Distinguishing an explicitly recorded No from an unrecorded checkbox day.
 - Final counter range, threshold default, and text/choice limits.
 - Confirming the defaults for future-day marks, calendar-year totals, threshold changes, and single-choice statistics.
-- Habit ordering and archiving.
+- Habit archiving.
 - Production date/timezone handling and Android light/dark appearance settings.
 - Storage, backup, account/synchronization behavior, reminders, and spreadsheet import. No requirements for these were established during this UX discussion.
